@@ -1,27 +1,26 @@
 # PII Detector Browser Extension
 
-A Chrome Manifest V3 extension prototype for scanning uploaded documents for personally identifiable information (PII). The popup is wired to OCR scripts, and the extension manifest declares a background service worker and local Tesseract.js resource.
+A Chrome extension prototype for selecting a document and running OCR-related processing intended to identify personally identifiable information (PII). It uses a Manifest V3 extension structure with a popup interface and background service worker.
 
-## Stack
+## Structure and flow
 
-- Chrome Extensions Manifest V3
-- HTML, CSS, and vanilla JavaScript
-- Tesseract.js for OCR (the manifest expects `scripts/tesseract.min.js` to be available locally)
+- manifest.json declares the extension popup, service worker, permissions, and web-accessible resources.
+- popup.html and scripts/popup.js provide the popup interface and upload interaction.
+- scripts/ocr.js contains OCR-related logic.
+- scripts/background.js is the background service worker.
+- styles/ and images/ hold the UI styling and icon assets.
 
-## Load the extension
+The manifest declares storage permission and references a local Tesseract.js script.
 
-1. Open `chrome://extensions` and enable **Developer mode**.
-2. Choose **Load unpacked** and select the `pii-detector-extension/` directory.
-3. Open the extension popup and try the document upload workflow.
+## Load in Chrome
 
-## Structure
+1. Open chrome://extensions.
+2. Enable Developer mode.
+3. Select Load unpacked and choose the pii-detector-extension/ folder.
+4. Open the extension popup and try the available document workflow.
 
-- `pii-detector-extension/manifest.json` — extension metadata and permissions
-- `popup.html` and `scripts/popup.js` — extension popup UI and interactions
-- `scripts/background.js` — service worker
-- `scripts/ocr.js` — OCR-related logic
-- `styles/` and `images/` — presentation assets
+## Dependency and project status
 
-## Current setup note
+The manifest expects scripts/tesseract.min.js, but that file is not listed in the repository tree. There is no npm package manifest in the extension folder. Supply the OCR library before expecting OCR processing to work.
 
-The manifest references a local `scripts/tesseract.min.js` file. Confirm that this dependency is present before expecting OCR to run; the repository does not include an npm package manifest at the extension root.
+This is a prototype. Treat detections as review prompts and verify them manually before using them for decisions involving sensitive documents.
